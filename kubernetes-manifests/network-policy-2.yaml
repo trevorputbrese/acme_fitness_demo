@@ -1,0 +1,41 @@
+---
+apiVersion: networking.k8s.io/v1
+kind: NetworkPolicy
+metadata:
+  name: acme-fitness-frontend-to-catalog
+  namespace: acme-fitness
+spec:
+  podSelector:
+    matchLabels:
+      service: catalog
+  policyTypes:
+  - Ingress
+  ingress:
+    - from:
+      - podSelector:
+          matchLabels:
+            service: frontend
+      ports:
+      - protocol: TCP
+        port: 6379
+
+# ---
+# apiVersion: networking.k8s.io/v1
+# kind: NetworkPolicy
+# metadata:
+#   name: acme-fitness-deny-all
+#   namespace: acme-fitness
+# spec:
+#   podSelector:
+#     matchLabels:planespotte
+#       app: r-app
+#   policyTypes:
+#   - Ingress
+#   ingress:
+#     - from:
+#       - podSelector:
+#           matchLabels:
+#             app: planespotter-frontend
+#       ports:
+#       - protocol: TCP
+#         port: 80
